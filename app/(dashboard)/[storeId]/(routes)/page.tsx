@@ -1,5 +1,8 @@
+import Navbar from "@/components/navbar";
 import prismadb from "@/lib/prismadb";
 import React from "react";
+
+import SettingsPage from "./settings/page";
 
 interface DashboardPageProps {
 	params: {
@@ -14,7 +17,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
 		},
 	});
 
-	return <div>Active Store {store?.name}</div>;
+	return <div>Active Store: {store?.name}</div>;
 };
 
 export default DashboardPage;
