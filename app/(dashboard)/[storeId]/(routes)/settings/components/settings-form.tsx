@@ -79,7 +79,7 @@ export const SettingsForm: React.FC<SettingsFormPage> = ({ initialData }) => {
 							)}
 						/>
 					</div>
-					<Button disabled={loading}>Save Changes</Button>
+					<Button disabled={loading}>Save Change</Button>
 				</form>
 			</Form>
 		</>
