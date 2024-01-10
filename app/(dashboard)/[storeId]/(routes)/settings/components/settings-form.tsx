@@ -6,6 +6,7 @@ import { Store } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
@@ -19,6 +20,9 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { AlertModal } from "@/components/modals/Alert-modal";
 
 interface SettingsFormPage {
 	initialData: Store;
@@ -34,23 +38,61 @@ export const SettingsForm: React.FC<SettingsFormPage> = ({ initialData }) => {
 		resolver: zodResolver(formScema),
 		defaultValues: initialData,
 	});
+	const params = useParams();
+	const router = useRouter();
 
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	const onSubmit = async (data: SettingFormValues) => {
-		console.log(data);
+		try {
+			setLoading(true);
+			await axios.patch(`/api/stores/${params.storeId}`, data);
+			router.refresh();
+			toast.success("Store Updated");
+		} catch (error) {
+			toast.error("Something went wrong");
+		} finally {
+			setLoading(false);
+		}
+	};
+	const onDelete = async () => {
+		try {
+			setLoading(true);
+			await axios.delete(`/api/stores/${params.storeId}`);
+			router.refresh();
+			router.push("/");
+			toast.success("Store deleted.");
+		} catch (error: any) {
+			toast.error(
+				"Make sure you removed all products and categories first."
+			);
+		} finally {
+			setLoading(false);
+			setOpen(false);
+		}
 	};
 
 	return (
 		<>
+			<AlertModal
+				isOpen={open}
+				onClose={() => setOpen(false)}
+				onConfirm={onDelete}
+				loading={loading}
+			/>
 			<div className="flex items-center justify-between">
 				<Heading
 					title="Setting "
 					description="Manage Store performance"
 				/>
 
-				<Button variant="destructive" size="sm" onClick={() => {}}>
+				<Button
+					disabled={loading}
+					variant="destructive"
+					size="sm"
+					onClick={() => setOpen(true)}
+				>
 					<Trash className="h-4 w-4" />
 				</Button>
 			</div>
@@ -79,7 +121,7 @@ export const SettingsForm: React.FC<SettingsFormPage> = ({ initialData }) => {
 							)}
 						/>
 					</div>
-					<Button disabled={loading}>Save Changesssssss</Button>
+					<Button disabled={loading}>Save Change</Button>
 				</form>
 			</Form>
 		</>
