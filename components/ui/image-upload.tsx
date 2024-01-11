@@ -1,6 +1,8 @@
 "use client";
 
+import { url } from "inspector";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface ImageUploadProps {
 	disabled: boolean;
@@ -21,8 +23,28 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 		setIsMounted(true);
 	}, []);
 
+	const onUpload = (result: any) => {
+		onChange(result.info.secure_url);
+	};
+
 	if (!isMounted) {
 		return null;
 	}
-	return <>Image Uploading</>;
+
+	return (
+		<>
+			<div className="mb-4 flex items-center gap-4">
+				{value.map((url) => (
+					<div
+						key={url}
+						className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
+					>
+						<div className="z-10 absolute top-2 right-2">
+							<Button></Button>
+						</div>
+					</div>
+				))}
+			</div>
+		</>
+	);
 };
