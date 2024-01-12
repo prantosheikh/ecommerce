@@ -37,6 +37,10 @@ export async function PATCH(
 			},
 		});
 
+		if (!storeByUserId) {
+			return new NextResponse("Unauthrized", { status: 403 });
+		}
+
 		const billboard = await prismadb.billboard.create({
 			data: {
 				label,
@@ -47,6 +51,26 @@ export async function PATCH(
 		return NextResponse.json(billboard);
 	} catch (error) {
 		console.log("[BILLBOARD_POST]", error);
+		return new NextResponse("Internal error", { status: 500 });
+	}
+}
+export async function GET(
+	req: Request,
+	{ params }: { params: { storeId: string } }
+) {
+	try {
+		if (!params.storeId) {
+			return new NextResponse("Store id is required", { status: 400 });
+		}
+
+		const billboard = await prismadb.billboard.findMany({
+			where: {
+				storeId: params.storeId,
+			},
+		});
+		return NextResponse.json(billboard);
+	} catch (error) {
+		console.log("[BILLBOARD_GET]", error);
 		return new NextResponse("Internal error", { status: 500 });
 	}
 }
