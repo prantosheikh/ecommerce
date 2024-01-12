@@ -10,6 +10,7 @@ import { Trash } from "lucide-react";
 import { Billboard } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
+// import ImageUpload from "@/components/ui/image-upload";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +23,8 @@ import {
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
+import { ImageUpload } from "@/components/ui/image-upload";
+import { url } from "inspector";
 
 const formSchema = z.object({
 	label: z.string().min(1),
@@ -128,12 +131,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 							<FormItem>
 								<FormLabel>Background image</FormLabel>
 								<FormControl>
-									<Input
+									<ImageUpload
+										value={field.value ? [field.value] : []}
 										disabled={loading}
-										placeholder="Background label"
-										{...field}
+										onChange={(url) => field.onChange(url)}
+										onRemove={(url) => field.onChange("")}
 									/>
-									ssss
 								</FormControl>
 								<FormMessage />
 							</FormItem>

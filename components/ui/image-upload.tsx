@@ -14,7 +14,7 @@ interface ImageUploadProps {
 	value: string[];
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({
+export const ImageUpload: React.FC<ImageUploadProps> = ({
 	disabled,
 	onChange,
 	onRemove,
