@@ -38,4 +38,5 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
    );
 };
 
+
 export default SettingsPage;
