@@ -18,6 +18,7 @@ import {
 // import { AlertModal } from "@/components/modals/alert-modal";
 
 import { CategoryColumn } from "./columns";
+import { AlertModal } from "@/components/modals/Alert-modal";
 
 interface CellActionProps {
 	data: CategoryColumn;
@@ -52,12 +53,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
 	return (
 		<>
-			{/* <AlertModal
+			<AlertModal
 				isOpen={open}
 				onClose={() => setOpen(false)}
 				onConfirm={onConfirm}
 				loading={loading}
-			/> */}
+			/>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button variant="ghost" className="h-8 w-8 p-0">
