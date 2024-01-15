@@ -29,7 +29,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const onConfirm = async () => {
+	const onDelete = async () => {
 		try {
 			setLoading(true);
 			await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
