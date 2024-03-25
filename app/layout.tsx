@@ -5,6 +5,7 @@ import { ModalProvider } from "@/providers/modal-provider";
 import "./globals.css";
 import prismadb from "@/lib/prismadb";
 import { ToastProvider } from "@/providers/toast-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,13 @@ export default function RootLayout({
 				<body className={inter.className}>
 					<ModalProvider />
 					<ToastProvider />
-					{children}
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="white"
+						enableSystem
+					>
+						{children}
+					</ThemeProvider>
 				</body>
 			</html>
 		</ClerkProvider>
